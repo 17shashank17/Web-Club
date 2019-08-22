@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<title>Online Quiz Exam</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+#quiz-box{
+ 
+    border-radius: 3px;
+    margin-left:200px;
+    margin-top:100px;
+    margin-right: 150px;
+    border-bottom: 2px solid red;
+
+}
+a{
+    text-decoration: None;
+}
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+
+.w3-sidebar {width: 120px;background: #222;}
+
+#main {margin-left: 120px}
+
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+</style>
+<body class="w3-black">
+
+
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+
+  <a href="/quiz" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-home w3-xxlarge"></i>
+    <p>HOME</p>
+  </a>
+  <a href="/quiz/quiz_available" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-user w3-xxlarge"></i>
+    <p>Take A Quiz</p>
+  </a>
+  <a href="/quiz/login" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-eye w3-xxlarge"></i>
+    <p>Login</p>
+  </a>
+  <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>LeaderBoard</p>
+  </a>
+</nav>
+
+    {% for i in q %}
+    <a href="/quiz/{{ i.id }}"><div id="quiz-box">
+        <h2>{{ i.name_quiz }}</h2>
+        <h3>{{ i.organiser }}</h3>
+    </div></a>
+    {% endfor %}
