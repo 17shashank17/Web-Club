@@ -7,17 +7,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-#question-box{
- 
+.question-box{
  border-radius: 3px;
  margin-left:200px;
  margin-top:100px;
  margin-right: 150px;
  border-bottom: 2px solid red;
-
 }
-.btn{
-  width: 30%;
+.btn, .btn1{
+  width: 20%;
   background: none;
   border: 2px solid #4caf50;
   color:white;
@@ -25,6 +23,10 @@
   font-size: 18px;
   cursor: pointer;
   margin: 12px 0;
+}
+.btn1{
+  margin-left: 600px;
+  width: 20%;
 }
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 .w3-row-padding img {margin-bottom: 12px}
@@ -48,56 +50,85 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Take A Quiz</p>
   </a>
-  <a href="/quiz/login" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+  <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-eye w3-xxlarge"></i>
-    <p>Login</p>
+    <p>Log Out</p>
   </a>
   <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-envelope w3-xxlarge"></i>
     <p>LeaderBoard</p>
   </a>
 </nav>
-
+<form method="post">
+  {% csrf_token %}
 {% for i in question_set %}
-<form>
-<div id="question-box">
+<p>
+  <div class="question-box">
     <h2>{{ i.question }}</h2>
-        <input type="radio" id="opt1" name="option" value="{{ i.option1 }}">&nbsp;&nbsp;&nbsp;{{ i.option1 }}<br>
-        <input type="radio" id="opt2" name="option" value="{{ i.option2 }}">&nbsp;&nbsp;&nbsp;{{ i.option2 }}<br>
-        <input type="radio" id="opt3" name="option" value="{{ i.option3 }}">&nbsp;&nbsp;&nbsp;{{ i.option3 }}<br>
-        <input style="visibility:hidden; color:white;" id="answer" value="{{ i.correct }}"><br>
-        <input onclick="validate_answer()" type="submit" value="Submit Answer" class="btn">
-        <br><br>  
-</div>
-</form>
-{% endfor %}
 
+        <input type="radio" class="opt1" name="option" value="{{ i.option1 }}">&nbsp;&nbsp;&nbsp;{{ i.option1 }}<br>
+        <input type="radio" class="opt2" name="option" value="{{ i.option2 }}">&nbsp;&nbsp;&nbsp;{{ i.option2 }}<br>
+        <input type="radio" class="opt3" name="option" value="{{ i.option3 }}">&nbsp;&nbsp;&nbsp;{{ i.option3 }}
+        <input style="visibility:hidden; color:white;" class="answer" value="{{ i.correct }}">
+        <input style="visibility:hidden;" class="put_count" name="score" value=0><br>
+        <label class="label1" style="visibility: hidden; color:linen;">Correct Answer:{{ i.correct }}</label>
+        <br><input value="Submit Answer" class="btn" readonly>
+        <br><br>
+</div>
+</p>
+{% endfor %}
+<h2 id="show_text" style="margin-left: 300px; color: linen; visibility: hidden;">You have attempted all the questions of this quiz!</h2>
+<input type="submit" class="btn1" value="End Quiz">
+</form>
+</body>
+<!-- jquery library added -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 
-    function validate_answer(){
-        var opt1=document.getElementById('opt1');
-        var opt2=document.getElementById('opt2');
-        var opt3=document.getElementById('opt3');
-        console.log(opt1.value);
-        
-        var ans=document.getElementById('answer');
-        console.log(ans.value);
-        if (opt1.checked){
-            if (opt1.value==ans.value){
-                console.log(ans.value);
-                ans.style.visibility="visible";
-            }
-        }
-        else if (opt2.checked){
-            if (opt2.value==ans.value){
-                ans.style.visibility="visible";
-            }
-        }
-        else if (opt3.checked){
-            if (opt3.value==ans.value){
-                ans.style.visibility="visible";
-            }
-        }
-    }
+    $(document).ready(function(){
+      var total_question=$('.question-box').size();
+      var curr_quest=0;
+      $questions=$('.question-box');
+      $option1=$('.opt1');
+      $option2=$('.opt2');
+      $option3=$('.opt3');
+      $ans=$('.answer');
+      $label=$('.label1')
+      $score=$('.put_count');
+      $questions.hide();
+      $($questions.get(curr_quest)).fadeIn(1000);
+      var count=0
+
+      $('.btn').click(function(){
+          var x1=$($option1.get(curr_quest)).context;
+          var x2=$($option2.get(curr_quest)).context;
+          var x3=$($option3.get(curr_quest)).context;
+          var x4=$($ans.get(curr_quest)).context.getAttribute("value");
+          console.log(x4);
+          var label_show=$($label.get(curr_quest)).css('visibility','visible');
+          
+          if (x1.checked && x1.getAttribute("value")==x4){
+            count+=1;
+            $($score.get(curr_quest)).attr('value',count);
+          }
+          else if (x2.checked && x2.getAttribute("value")==x4){
+            count+=1;
+            $($score.get(curr_quest)).attr('value',count);
+          }
+          else if (x3.checked && x3.getAttribute("value")==x4){
+            count+=1;
+            $($score.get(curr_quest)).attr('value',count);
+          }
+          curr_quest+=1;
+          if (curr_quest==total_question){
+            $('#show_text').css('visibility','visible');
+          }
+          else{
+            $($questions.get(curr_quest)).fadeIn(1000);
+          }
+      });
+    });
 
 </script>

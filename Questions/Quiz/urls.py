@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^logout',views.logout_user,name="logout_user"),
     url(r'^profile',views.profile,name="profile"),
     url(r'^create_quiz',views.create_quiz,name="create_quiz"),
+    url(r'^performance',views.performance,name="performance"),
+    url(r'^leaderboard',views.leaderboard,name="leaderboard"),
 ]

@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+.detail-box{
+    margin-left: 300px;
+}
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 .w3-row-padding img {margin-bottom: 12px}
 
@@ -46,8 +49,11 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   </a>
 </nav>
 
-
-<div class="w3-padding-large" id="main">
-  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
-    <h1 class="w3-jumbo"><span class="w3-hide-small">Welcome</span>{{ username }}</h1>
-  </header>
+<div class="detail-box">
+    <h2>{{ user_info.name }}</h2>
+    <h2>Total Rating: {{ user_info.score }}</h2>
+    {% for i in test_attempted %}
+        <h3>Quiz Name: {{ i.score_test.name_quiz }}</h3>
+        <h3>Score: {{ i.score }}</h3>
+    {% endfor %}
+</div>

@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Quiz(models.Model):
-    organiser=models.CharField(max_length=15,default="")
-    name_quiz=models.CharField(max_length=15,unique=True)
+    organiser=models.CharField(max_length=200,default="")
+    name_quiz=models.CharField(max_length=200,unique=True)
     number_quiz=models.IntegerField(default=0)
 
 class Questions(models.Model):
@@ -18,12 +18,15 @@ class Questions(models.Model):
 
 class User_Info(models.Model):
     relation=models.ForeignKey(User,on_delete=models.CASCADE)
+    username=models.CharField(max_length=200,default="")
     name=models.CharField(max_length=15,default="")
     score=models.IntegerField(default=0)
+
 
 class Test_Score(models.Model):
     relation=models.ForeignKey(User,on_delete=models.CASCADE)
     score_test=models.ForeignKey(Quiz,on_delete=models.CASCADE)
+    attempted=models.BooleanField(default=False)
     score=models.IntegerField(default=0)
 
 class Feedback(models.Model):

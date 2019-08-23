@@ -14,18 +14,51 @@ def home(request):
     return render(request,'Quiz/home.html')
 
 def quiz_all(request):
-    q=Quiz.objects.all()
-
-    return render(request,'Quiz/quizall.html',{'q':q,}) 
+    try:
+        username=request.session['username']
+        print(username)
+        user=User.objects.get(username=username)
+        q=Quiz.objects.all()
+        attempted_quiz=Test_Score.objects.filter(relation=user)
+        quiz_name=[]
+        for i in attempted_quiz:
+            quiz_name.append(i.score_test)
+        print(quiz_name)
+        return render(request,'Quiz/quizall.html',{'q':q,'quiz_name':quiz_name})
+    except:
+        return HttpResponseRedirect('/quiz/login/')
+     
 
 def questions(request,id):
-    quiz=Quiz.objects.get(id=id)
-    #question_set=Questions.objects.filter(relation=quiz).item_list('question','option1','option2','option3','correct')
-    #context={'question_set':question_set}
-    #data = serializers.serialize('json', context)
-    #data=json.dumps(list(context),cls=DjangoJSONEncoder)
-    question_set=Questions.objects.filter(relation=quiz)
-    return render(request,"Quiz/take_quiz.html",{'question_set':question_set,})
+    if request.method=="POST":
+        score=request.POST.get('score')
+        username=request.session['username']
+        user=User.objects.get(username=username)
+        user_info=User_Info.objects.get(relation=user)
+        user_info.score+=int(score)
+        user_info.save()
+        test_score=Test_Score()
+        test_score.relation=user
+        test_score.score_test=Quiz.objects.get(name_quiz=request.session['quiz_name'])
+        test_score.score=int(score)
+        test_score.attempted=True
+        test_score.save()
+        return HttpResponseRedirect('/quiz/profile/')
+        
+    else:
+        try:
+            username=request.session['username']
+            quiz=Quiz.objects.get(id=id)
+            quiz_name=quiz.name_quiz
+            request.session['quiz_name']=quiz_name
+            #question_set=Questions.objects.filter(relation=quiz).item_list('question','option1','option2','option3','correct')
+            #context={'question_set':question_set}
+            #data = serializers.serialize('json', context)
+            #data=json.dumps(list(context),cls=DjangoJSONEncoder)
+            question_set=Questions.objects.filter(relation=quiz)
+            return render(request,"Quiz/take_quiz.html",{'question_set':question_set,})
+        except:
+            return HttpResponseRedirect('/quiz/login/')
 
 def login_user(request):
     if request.method=="POST":
@@ -42,6 +75,22 @@ def login_user(request):
 def profile(request):
     username=request.session['username']
     return render(request,'Quiz/profile.html',{'username':username})
+
+def performance(request):
+    username=request.session['username']
+    user=User.objects.get(username=username)
+    user_info=User_Info.objects.get(relation=user)
+    test_attempted=Test_Score.objects.filter(relation=user)
+    context={
+        'user_info':user_info,
+        'test_attempted':test_attempted,
+    }
+    return render(request,'Quiz/performance.html',context)
+
+def leaderboard(request):
+    user_info=User_Info.objects.all()
+
+    return render(request,'Quiz/leaderboard.html',{'user_info':user_info,})
 
 def logout_user(request):
     logout(request)
@@ -64,6 +113,7 @@ def signup(request):
             user_info=User_Info()
             user_info.relation=user
             user_info.name=name
+            user_info.username=username
             user_info.save()
         return render(request,'Quiz/profile.html',{'username':username})
     else:
