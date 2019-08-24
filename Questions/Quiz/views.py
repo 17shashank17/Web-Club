@@ -74,7 +74,15 @@ def login_user(request):
 
 def profile(request):
     username=request.session['username']
-    return render(request,'Quiz/profile.html',{'username':username})
+    return render(request,'Quiz/profile.html',{'username':username,})
+
+def your_quiz(request):
+    if request.method=="POST":
+        id=request.POST.get("delete_quiz")
+    else:
+        username=request.session['username']
+        quiz=Quiz.objects.filter(organiser=username)
+        return render(request,'Quiz/your_quiz.html',{'quiz':quiz,})
 
 def performance(request):
     username=request.session['username']
@@ -89,8 +97,12 @@ def performance(request):
 
 def leaderboard(request):
     user_info=User_Info.objects.all()
+    try:
+        username=request.session['username']
 
-    return render(request,'Quiz/leaderboard.html',{'user_info':user_info,})
+        return render(request,'Quiz/leaderboard.html',{'user_info':user_info,'user':True})
+    except:
+        return render(request,'Quiz/leaderboard.html',{'user_info':user_info,'user':False})
 
 def logout_user(request):
     logout(request)

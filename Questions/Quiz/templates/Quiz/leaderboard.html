@@ -23,11 +23,17 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
 
 <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-
+{% if user %}
   <a href="/quiz/profile" class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-home w3-xxlarge"></i>
     <p>HOME</p>
   </a>
+{% else %}
+<a href="/quiz" class="w3-bar-item w3-button w3-padding-large w3-black">
+  <i class="fa fa-home w3-xxlarge"></i>
+  <p>HOME</p>
+</a>
+{% endif %}
   <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Take A Quiz</p>
@@ -36,10 +42,16 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Performance</p>
   </a>
+  {% if user %}
   <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-eye w3-xxlarge"></i>
     <p>Log Out</p>
+  {% else %}
+  <a href="/quiz/login" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-eye w3-xxlarge"></i>
+    <p>Log In</p>
   </a>
+  {% endif %}
   <a href="/quiz/create_quiz" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-envelope w3-xxlarge"></i>
     <p>Create Quiz</p>

@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load socialaccount %}
+{% providers_media_js %}
 
 
 <!DOCTYPE html>
@@ -108,7 +110,9 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
         <div class="login-box">
                 <h1 style="color:white;">Log In</h1>
                 <div class="textbox">
-                    <i class="fa fa-user-circle"></i>
+                  <a style="color: white; text-decoration: None;" href="{% provider_login_url "facebook" method="js_sdk" %}">
+                    <i class="fa fa-facebook-official w3-hover-opacity"></i>Facebook Login</a>
+                    <br><i class="fa fa-user-circle"></i>
                     <input type="text" placeholder="Username" name="username" required>
                 </div>
                 

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Quiz(models.Model):
+    #relation=models.ForeignKey(User,on_delete=models.CASCADE,default="")
     organiser=models.CharField(max_length=200,default="")
     name_quiz=models.CharField(max_length=200,unique=True)
     number_quiz=models.IntegerField(default=0)
