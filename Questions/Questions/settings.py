@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Quiz.apps.QuizConfig',
     #'social_django',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
+    #'django.contrib.sites',
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
+    #'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.facebook',
 ]
 
 #AUTHENTICATION_BACKENDS=(
@@ -133,6 +133,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-SITE_ID=1
+#SITE_ID=1
 
-login_redirect_url='/quiz'
+#login_redirect_url='/quiz'

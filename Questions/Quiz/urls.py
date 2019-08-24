@@ -2,7 +2,7 @@
 from django.urls import path,include
 from django.conf.urls import url
 from . import views
-from django.conf import settings
+#from django.conf import settings
 
 urlpatterns = [
     #url(r'^api/v1/',('social_django.urls',namespace='social')),
@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^performance',views.performance,name="performance"),
     url(r'^leaderboard',views.leaderboard,name="leaderboard"),
     url(r'^your_quiz',views.your_quiz,name="your_quiz"),
+    url(r'^modify',views.modify_quiz,name="modify_quiz"),
 ]
 
 #AIzaSyCRNh2DQfCBPzTVKkO9yzA0Yy4JbQq3vVM

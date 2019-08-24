@@ -66,13 +66,18 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 </nav>
 
 {% for i in quiz %}
-<form method="post">
-    {% csrf_token %}
-    <a href="/quiz/{{ i.id }}" style="text-decoration: None;"><div class="quiz-box">
+    <div class="quiz-box">
         <h2>{{ i.name_quiz }}</h2>
         <h2>{{ i.organiser }}</h2>
-        <input type="submit" value="Delete Quiz" name="delete_quiz" class="btn" readonly>
-        <input value="Modify Quiz" class="btn1" readonly>
-    </div></a>
-</form>
+        <form method="post">
+          {% csrf_token %}
+        <input type="hidden" value="{{ i.id }}" name="id-value-delete">
+        <input type="submit" value="Delete Quiz" class="btn" readonly>
+        </form>
+        <form method="post">
+          {% csrf_token %}
+        <input type="hidden" value="{{ i.id }}" name="id-value-modify">
+        <input type="submit" value="Modify Quiz" class="btn1" readonly>
+        </form>
+    </div>
 {% endfor %}

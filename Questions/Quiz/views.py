@@ -78,11 +78,71 @@ def profile(request):
 
 def your_quiz(request):
     if request.method=="POST":
-        id=request.POST.get("delete_quiz")
+        try:
+            id_delete=request.POST.get("id-value-delete")
+            quiz=Quiz.objects.get(id=id_delete)
+            quiz.delete()
+            return HttpResponseRedirect('/quiz/your_quiz')
+        except:
+            id_modify=request.POST.get("id-value-modify")
+            #quiz=Quiz.objects.get(id=id_modify)
+            request.session['id']=id_modify
+            #questions=Questions.objects.filter(relation=quiz)
+            #return render(request,'Quiz/modify.html',{'questions':questions})
+            return HttpResponseRedirect('/quiz/modify')
     else:
         username=request.session['username']
         quiz=Quiz.objects.filter(organiser=username)
         return render(request,'Quiz/your_quiz.html',{'quiz':quiz,})
+
+def modify_quiz(request):
+    if request.method=="POST":
+        
+        id_delete=request.POST.get("id-delete-question")
+        print(id_delete)
+        if id_delete is not None:
+            quest=Questions.objects.get(id=id_delete)
+            quest.delete()
+            return HttpResponseRedirect('/quiz/modify')
+        else:
+            contest_name=request.POST.get('contest_name')
+            quiz=Quiz.objects.get(name_quiz=contest_name)
+            quest=request.POST.get('question')
+            option1=request.POST.get('option1')
+            option2=request.POST.get('option2')
+            option3=request.POST.get('option3')
+            try:
+
+                quest_obj=Questions.objects.get(relation=quiz,question=quest)
+                quest_obj.question=quest
+                quest_obj.option1=option1
+                quest_obj.option2=option2
+                quest_obj.option3=option3
+                quest_obj.save()
+                return HttpResponseRedirect('/quiz/modify')
+            except:
+            
+                quest_obj=Questions()
+                quest_obj.relation=quiz
+                quest_obj.question=quest
+                quest_obj.option1=option1
+                quest_obj.option2=option2
+                quest_obj.option3=option3
+                quest_obj.save()
+                return HttpResponseRedirect('/quiz/modify')
+            
+
+
+            return HttpResponseRedirect('/quiz/modify')
+
+    else:
+
+        id_modify=request.session['id']
+        quiz=Quiz.objects.get(id=id_modify)
+        quiz_name=quiz.name_quiz
+        questions=Questions.objects.filter(relation=quiz)
+        return render(request,'Quiz/modify.html',{'questions':questions,'quiz_name':quiz_name,})
+
 
 def performance(request):
     username=request.session['username']

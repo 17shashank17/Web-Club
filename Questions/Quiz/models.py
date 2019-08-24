@@ -7,6 +7,7 @@ class Quiz(models.Model):
     organiser=models.CharField(max_length=200,default="")
     name_quiz=models.CharField(max_length=200,unique=True)
     number_quiz=models.IntegerField(default=0)
+    attempt=models.IntegerField(default=0,blank=True,null=True)
 
 class Questions(models.Model):
     relation=models.ForeignKey(Quiz,on_delete=models.CASCADE)
@@ -15,6 +16,10 @@ class Questions(models.Model):
     option2=models.CharField(max_length=10000,default="")
     option3=models.CharField(max_length=10000,default="")
     correct=models.CharField(max_length=10000,default="")
+    option1_per=models.IntegerField(default=0,blank=True,null=True)
+    option2_per=models.IntegerField(default=0,blank=True,null=True)
+    option3_per=models.IntegerField(default=0,blank=True,null=True)
+
 
 
 class User_Info(models.Model):

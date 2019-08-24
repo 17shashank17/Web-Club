@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<title>Online Quiz Exam</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.box{
+    margin-left: 200px;
+    margin-right: 100px;
+}
+.question-box{
+ border-radius: 3px;
+ margin-left:200px;
+ margin-top:100px;
+ margin-right: 150px;
+ border-bottom: 2px solid red;
+}
+.quiz-box{
+ 
+ border-radius: 3px;
+ margin-left:200px;
+ margin-top:100px;
+ margin-right: 150px;
+ border-bottom: 2px solid red;
+
+}
+.btn, .btn1,.btn_modify{
+  width: 20%;
+  background: none;
+  border: 2px solid #4caf50;
+  color:white;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 12px 0;
+}
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+
+.w3-sidebar {width: 120px;background: #222;}
+
+#main {margin-left: 120px}
+
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+</style>
+<body class="w3-black">
+
+
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+
+  <a href="/quiz/profile" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-home w3-xxlarge"></i>
+    <p>HOME</p>
+  </a>
+  <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-user w3-xxlarge"></i>
+    <p>Take A Quiz</p>
+  </a>
+  <a href="/quiz/performance" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-user w3-xxlarge"></i>
+    <p>Performance</p>
+  </a>
+  <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-eye w3-xxlarge"></i>
+    <p>Log Out</p>
+  </a>
+  <a href="/quiz/create_quiz" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>Create Quiz</p>
+  <a href="/quiz/leaderoard" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>LeaderBoard</p>
+  </a>
+</nav>
+
+
+{% for i in questions %}
+<p>
+  <div class="question-box">
+    <h2 class="quest_display">{{ i.question }}</h2>
+
+        <input type="radio" class="opt1" name="option" value="{{ i.option1 }}">&nbsp;&nbsp;&nbsp;{{ i.option1 }}<br>
+        <input type="radio" class="opt2" name="option" value="{{ i.option2 }}">&nbsp;&nbsp;&nbsp;{{ i.option2 }}<br>
+        <input type="radio" class="opt3" name="option" value="{{ i.option3 }}">&nbsp;&nbsp;&nbsp;{{ i.option3 }}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{ i.id }}" name="id-delete-question">
+            <input type="submit" value="Delete Question" class="btn" readonly>
+        </form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" id="{{ i.id }}" value="{{ i.question }}" name="id-modify-question">
+            <input onclick="func(document.getElementById('{{ i.id }}').getAttribute('value'),document.getElementsByClassName('quest_display'),document.getElementsByClassName('opt1'),document.getElementsByClassName('opt2'),document.getElementsByClassName('opt3'))" value="Modify Question" class="btn_modify" readonly>
+        </form>
+        <br><br>
+</div>
+</p>
+{% endfor %}
+<div class="box">
+<form method="post">
+        {% csrf_token %}
+        <p><input class="w3-input w3-padding-16" value="{{ quiz_name }}" type="text" placeholder="Contest Name" required name="contest_name" readonly></p>
+        <p><input class="w3-input w3-padding-16" id="question" type="text" placeholder="Question" required name="question"></p>
+        <p><input class="w3-input w3-padding-16" id="option1" type="text" placeholder="Option 1" required name="option1"></p>
+        <p><input class="w3-input w3-padding-16" id="option2" type="text" placeholder="Option 2" required name="option2"></p>
+        <p><input class="w3-input w3-padding-16" id="option3" type="text" placeholder="Option 3" required name="option3"></p>
+        <p><input class="w3-input w3-padding-16" type="text" placeholder="Correct Answer" required name="correct"></p>
+        <p>
+        <input type="submit" class="btn" value="Add Question">   
+        </p>
+     </form>
+</div>
+<!-- jquery library added -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    function func(id,question,option1,option2,option3){
+        
+        for(i=0;i<question.length;i++){
+            if (id==question[i].textContent){
+                break;
+            }
+        }
+        document.getElementById('question').setAttribute("value",question[i].textContent);
+        document.getElementById('option1').setAttribute("value",option1[i].getAttribute("value"));
+        document.getElementById('option2').setAttribute("value",option2[i].getAttribute("value"));
+        document.getElementById('option3').setAttribute("value",option3[i].getAttribute("value"));
+    }
+</script>
