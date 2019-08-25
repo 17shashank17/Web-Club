@@ -75,7 +75,7 @@ uploadFile.addEventListener("change", () => {
     () => {
       // Create image
       img = new Image();
-      // Set image src
+      // Set image source
       img.src = reader.result;
       // On image load add to canvas
       img.onload = function() {
@@ -109,16 +109,12 @@ downloadBtn.addEventListener("click", () => {
 
 // Download
 function download(canvas, filename) {
-  // Init event
   let e;
   // Create link
   const link = document.createElement("a");
-
-  // Set props
   link.download = filename;
   link.href = canvas.toDataURL("image/jpeg", 0.8);
   // New mouse event
   e = new MouseEvent("click");
-  // Dispatch event
   link.dispatchEvent(e);
 }
