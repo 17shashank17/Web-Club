@@ -35,7 +35,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <i class="fa fa-home w3-xxlarge"></i>
     <p>HOME</p>
   </a>
-  <a href="/quiz/quiz_available" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+  <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Take A Survey</p>
   </a>
@@ -61,12 +61,11 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
 <form method="post">
     {% csrf_token %}
-    <p><input class="w3-input w3-padding-16" type="text" placeholder="Contest Name" required name="contest_name"></p>
+    <p><input class="w3-input w3-padding-16" type="text" placeholder="Survey Name" required name="contest_name"></p>
     <p><input class="w3-input w3-padding-16" type="text" placeholder="Question" required name="question"></p>
     <p><input class="w3-input w3-padding-16" type="text" placeholder="Option 1" required name="option1"></p>
     <p><input class="w3-input w3-padding-16" type="text" placeholder="Option 2" required name="option2"></p>
     <p><input class="w3-input w3-padding-16" type="text" placeholder="Option 3" required name="option3"></p>
-    <p><input class="w3-input w3-padding-16" type="text" placeholder="Correct Answer" required name="correct"></p>
     <p>
       <input type="submit" class="btn" value="Add Question">
         

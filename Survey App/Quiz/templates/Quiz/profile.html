@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+.surveys{
+  margin-left: 100px;
+  border-bottom: 2px solid red;
+}
+#feedback{
+  margin-left: 120px;
+  margin-right: 100px;
+}
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 .w3-row-padding img {margin-bottom: 12px}
 
@@ -28,10 +36,6 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Take A Survey</p>
-  </a>
-  <a href="/quiz/performance" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>Performance</p>
   </a>
 
   <a href="/quiz/create_quiz" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
@@ -57,3 +61,27 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
     <h1 class="w3-jumbo"><span class="w3-hide-small">Welcome </span>{{ username }}</h1>
   </header>
+<h2 class="w3-center">Surveys Taken</h2>
+<div class="surveys">
+  {% for i in test_attempted %}
+        <h3 class=>Survey Name: {{ i.score_test.name_quiz }}</h3>
+    {% endfor %}
+</div>
+<br><br>
+<div id="feedback">
+<p>Write a Feedback:</p>
+
+<form method="post">
+  {% csrf_token %}
+  <p><input class="w3-input w3-padding-16" type="text" value ="{{ username }}" placeholder="Name" required name="Name" readonly></p>
+  <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
+  <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
+  <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
+  <p>
+    <button class="w3-button w3-light-grey w3-padding-large" type="submit">
+      <i class="fa fa-paper-plane"></i> SEND MESSAGE
+    </button>
+  </p>
+</form>
+</div>
+</div>

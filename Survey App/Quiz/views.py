@@ -115,15 +115,21 @@ def login_user(request):
         request.session['username']=username
         password=request.POST.get('password')
         user=authenticate(username=username,password=password)
+        user1=User.objects.get(username=username)
+        test_attempted=Test_Score.objects.filter(relation=user1)
         if user:
             login(request,user)
-            return render(request,'Quiz/profile.html',{'username':username})
+            return render(request,'Quiz/profile.html',{'username':username,'test_attempted':test_attempted,})
     else:
         return render(request,'Quiz/login.html')
 
 def profile(request):
     username=request.session['username']
-    return render(request,'Quiz/profile.html',{'username':username,})
+    user=User.objects.get(username=username)
+    user_info=User_Info.objects.get(relation=user)
+    test_attempted=Test_Score.objects.filter(relation=user)
+    
+    return render(request,'Quiz/profile.html',{'username':username,'test_attempted':test_attempted})
 
 def your_quiz(request):
     if request.method=="POST":
@@ -191,18 +197,6 @@ def modify_quiz(request):
         quiz_name=quiz.name_quiz
         questions=Questions.objects.filter(relation=quiz)
         return render(request,'Quiz/modify.html',{'questions':questions,'quiz_name':quiz_name,})
-
-
-def performance(request):
-    username=request.session['username']
-    user=User.objects.get(username=username)
-    user_info=User_Info.objects.get(relation=user)
-    test_attempted=Test_Score.objects.filter(relation=user)
-    context={
-        'user_info':user_info,
-        'test_attempted':test_attempted,
-    }
-    return render(request,'Quiz/performance.html',context)
 
 
 def logout_user(request):
