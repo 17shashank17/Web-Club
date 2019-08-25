@@ -43,39 +43,7 @@ document.addEventListener("click", e => {
       Caman("#canvas", img, function() {
         this.vibrance(-5).render();
       });
-    } /*else if (e.target.classList.contains("vintage-add")) {
-      Caman("#canvas", img, function() {
-        this.vintage().render();
-      });
-    } else if (e.target.classList.contains("lomo-add")) {
-      Caman("#canvas", img, function() {
-        this.lomo().render();
-      });
-    } else if (e.target.classList.contains("clarity-add")) {
-      Caman("#canvas", img, function() {
-        this.clarity().render();
-      });
-    } else if (e.target.classList.contains("sincity-add")) {
-      Caman("#canvas", img, function() {
-        this.sinCity().render();
-      });
-    } else if (e.target.classList.contains("crossprocess-add")) {
-      Caman("#canvas", img, function() {
-        this.crossProcess().render();
-      });
-    } else if (e.target.classList.contains("pinhole-add")) {
-      Caman("#canvas", img, function() {
-        this.pinhole().render();
-      });
-    } else if (e.target.classList.contains("nostalgia-add")) {
-      Caman("#canvas", img, function() {
-        this.nostalgia().render();
-      });
-    } else if (e.target.classList.contains("hermajesty-add")) {
-      Caman("#canvas", img, function() {
-        this.herMajesty().render();
-      });
-    }*/
+    } 
   }
 });
 
@@ -107,7 +75,7 @@ uploadFile.addEventListener("change", () => {
     () => {
       // Create image
       img = new Image();
-      // Set image src
+      // Set image source
       img.src = reader.result;
       // On image load add to canvas
       img.onload = function() {
@@ -141,16 +109,12 @@ downloadBtn.addEventListener("click", () => {
 
 // Download
 function download(canvas, filename) {
-  // Init event
   let e;
   // Create link
   const link = document.createElement("a");
-
-  // Set props
   link.download = filename;
   link.href = canvas.toDataURL("image/jpeg", 0.8);
   // New mouse event
   e = new MouseEvent("click");
-  // Dispatch event
   link.dispatchEvent(e);
 }
