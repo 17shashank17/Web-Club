@@ -7,8 +7,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-.leader{
-    margin-left: 300px;
+.survey{
+    margin-left: 200px;
+    border-bottom: 2px solid red;
+    margin-top: 100px;
+}
+.btn, .btn1{
+  width: 20%;
+  background: none;
+  border: 2px solid #4caf50;
+  color:white;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 12px 0;
+}
+.ab{
+  position: fixed;
 }
 body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 .w3-row-padding img {margin-bottom: 12px}
@@ -21,9 +36,9 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 </style>
 <body class="w3-black">
 
-
+<div class="ab">
 <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-{% if user %}
+{% if username %}
   <a href="/quiz/profile" class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-home w3-xxlarge"></i>
     <p>HOME</p>
@@ -36,33 +51,33 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 {% endif %}
   <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
-    <p>Take A Quiz</p>
+    <p>Take A Survey</p>
   </a>
-  <a href="/quiz/performance" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>Performance</p>
-  </a>
-  {% if user %}
-  <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>Log Out</p>
-  {% else %}
-  <a href="/quiz/login" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>Log In</p>
-  </a>
-  {% endif %}
-  <a href="/quiz/create_quiz" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>Create Quiz</p>
+
+{% endif %}
   <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>LeaderBoard</p>
+    <p>Results</p>
   </a>
+  {% if username %}
+  <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-eye w3-xxlarge"></i>
+    <p>LogOut</p>
+  </a>
+{% else %}
+<a href="/quiz/login" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+  <i class="fa fa-eye w3-xxlarge"></i>
+  <p>Login</p>
+</a>
 </nav>
-
-<div class="leader">
-    {% for i in user_info %}
-        <h2>{{ i.username }} : {{ i.score }}</h2>
-    {% endfor %}
 </div>
+{% for i in survey %}
+<div class="survey">
+<form method="post">
+  {% csrf_token %}
+  <h1>{{ i.name_quiz }}</h1>
+  <input name="survey_results" type="hidden" value="{{ i.name_quiz }}">
+  <input type="submit" value="Show Results" class="btn">
+</form>
+</div>
+{% endfor %}

@@ -30,30 +30,30 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   </a>
   <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
-    <p>Take A Quiz</p>
+    <p>Take A Survey</p>
   </a>
   <a href="/quiz/performance" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
     <p>Performance</p>
   </a>
-  <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>Log Out</p>
-  </a>
+  
   <a href="/quiz/create_quiz" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>Create Quiz</p>
-  <a href="/quiz/leaderoard" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <p>Create A Survey</p>
+  <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>LeaderBoard</p>
+    <p>Results</p>
+    <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-eye w3-xxlarge"></i>
+      <p>Log Out</p>
+    </a>
   </a>
 </nav>
 
 <div class="detail-box">
     <h2>{{ user_info.name }}</h2>
-    <h2>Total Rating: {{ user_info.score }}</h2>
+    <h2>Survey Attempted</h2>
     {% for i in test_attempted %}
-        <h3>Quiz Name: {{ i.score_test.name_quiz }}</h3>
-        <h3>Score: {{ i.score }}</h3>
+        <h3>Survey Name: {{ i.score_test.name_quiz }}</h3>
     {% endfor %}
 </div>

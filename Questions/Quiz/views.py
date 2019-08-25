@@ -27,20 +27,69 @@ def quiz_all(request):
         return render(request,'Quiz/quizall.html',{'q':q,'quiz_name':quiz_name})
     except:
         return HttpResponseRedirect('/quiz/login/')
-     
+
+'''def results(request):
+    
+    questions=Questions.objects.all()
+    try:
+        username=request.session['username']
+        print(username)
+        return render(request,'Quiz/results.html',{'questions':questions,'username':True,})
+    except:
+        return render(request,'Quiz/results.html',{'questions':questions,'username':False,})'''
+
+def results(request):
+    if request.method=="POST":
+        survey_name=request.POST.get('survey_results')
+        quiz=Quiz.objects.get(name_quiz=survey_name)
+        question_set=Questions.objects.filter(relation=quiz)
+        try:
+            username=request.session['username']
+            return render(request,'Quiz/survey_results.html',{'question_set':question_set,'username':True})
+        except:
+            return render(request,'Quiz/survey_results.html',{'question_set':question_set,'username':False})
+    else:
+        survey=Quiz.objects.all()
+        try:
+            username=request.session['username']
+            return render(request,'Quiz/results.html',{'survey':survey,'username':True,})
+        except:
+            return render(request,'Quiz/results.html',{'survey':survey,'username':False,})
+    
 
 def questions(request,id):
     if request.method=="POST":
         score=request.POST.get('score')
         username=request.session['username']
+        quiz_name=request.session['quiz_name']
+        ans=request.POST.get('ans')
+        ans=ans.split(':')
+        quiz=Quiz.objects.get(name_quiz=quiz_name)
+        quiz.attempt+=1
+        quiz.save()
+        div=quiz.attempt
+        questions_set=Questions.objects.filter(relation=quiz)
+        for i in questions_set:
+            for j in range(len(ans)):
+                if i.option1==ans[j].strip():
+                    i.option1_per+=1
+                    break
+                elif i.option2==ans[j].strip():
+                    i.option2_per+=1
+                    break
+                elif i.option3_per==ans[j].strip():
+                    i.option3+=1
+                    break
+            i.option1_percentage=(i.option1_per/div)*100
+            i.option2_percentage=(i.option2_per/div)*100
+            i.option3_percentage=(i.option3_per/div)*100
+            i.save()
         user=User.objects.get(username=username)
         user_info=User_Info.objects.get(relation=user)
-        user_info.score+=int(score)
         user_info.save()
         test_score=Test_Score()
         test_score.relation=user
         test_score.score_test=Quiz.objects.get(name_quiz=request.session['quiz_name'])
-        test_score.score=int(score)
         test_score.attempted=True
         test_score.save()
         return HttpResponseRedirect('/quiz/profile/')
@@ -155,14 +204,6 @@ def performance(request):
     }
     return render(request,'Quiz/performance.html',context)
 
-def leaderboard(request):
-    user_info=User_Info.objects.all()
-    try:
-        username=request.session['username']
-
-        return render(request,'Quiz/leaderboard.html',{'user_info':user_info,'user':True})
-    except:
-        return render(request,'Quiz/leaderboard.html',{'user_info':user_info,'user':False})
 
 def logout_user(request):
     logout(request)

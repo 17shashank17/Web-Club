@@ -48,15 +48,16 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   </a>
   <a href="/quiz/quizall" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-user w3-xxlarge"></i>
-    <p>Take A Quiz</p>
+    <p>Take A Survey</p>
+  </a>
+  
+  <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>Results</p>
   </a>
   <a href="/quiz/logout" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-eye w3-xxlarge"></i>
     <p>Log Out</p>
-  </a>
-  <a href="/quiz/results" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>LeaderBoard</p>
   </a>
 </nav>
 <form method="post">
@@ -70,8 +71,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
         <input type="radio" class="opt2" name="option" value="{{ i.option2 }}">&nbsp;&nbsp;&nbsp;{{ i.option2 }}<br>
         <input type="radio" class="opt3" name="option" value="{{ i.option3 }}">&nbsp;&nbsp;&nbsp;{{ i.option3 }}
         <input style="visibility:hidden; color:white;" class="answer" value="{{ i.correct }}">
-        <input style="visibility:hidden;" class="put_count" name="score" value=0><br>
-        <label class="label1" style="visibility: hidden; color:linen;">Correct Answer:{{ i.correct }}</label>
+        <input style="visibility:hidden;" class="put_count" name="score" value=0><br><input style="visibility:hidden;" class="put_ans" name="ans">
+        <label class="label1" style="visibility: hidden; color:linen;"></label>
         <br><input value="Submit Answer" class="btn" readonly>
         <br><br>
 </div>
@@ -96,30 +97,61 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
       $option3=$('.opt3');
       $ans=$('.answer');
       $label=$('.label1')
-      $score=$('.put_count');
+     // $score=$('.put_count');
+      $put_ans=$('.put_ans')
       $questions.hide();
       $($questions.get(curr_quest)).fadeIn(1000);
-      var count=0
+     // var count=0
 
       $('.btn').click(function(){
           var x1=$($option1.get(curr_quest)).context;
           var x2=$($option2.get(curr_quest)).context;
           var x3=$($option3.get(curr_quest)).context;
-          var x4=$($ans.get(curr_quest)).context.getAttribute("value");
-          console.log(x4);
+          //var x4=$($ans.get(curr_quest)).context.getAttribute("value");
+          //console.log(x4);
           var label_show=$($label.get(curr_quest)).css('visibility','visible');
           
-          if (x1.checked && x1.getAttribute("value")==x4){
-            count+=1;
-            $($score.get(curr_quest)).attr('value',count);
+          if (x1.checked){
+            //count+=1;
+            //$($score.get(curr_quest)).attr('value',count);
+            if (curr_quest==0){
+              var y=x1.getAttribute('value');
+              $($put_ans.get(curr_quest)).attr('value',y);
+            }
+            else{
+              var x=$($put_ans).get(curr_quest-1).getAttribute('value');
+              var y=x1.getAttribute("value");
+              var z=x+' : '+y;
+              console.log(z);
+              $($put_ans.get(curr_quest)).attr('value',z);
+            }
           }
-          else if (x2.checked && x2.getAttribute("value")==x4){
-            count+=1;
-            $($score.get(curr_quest)).attr('value',count);
+          else if (x2.checked){
+            if (curr_quest==0){
+              var y=x2.getAttribute('value');
+              $($put_ans.get(curr_quest)).attr('value',y);
+            }
+            else{
+              var x=$($put_ans).get(curr_quest-1).getAttribute('value');
+              var y=x2.getAttribute("value");
+              var z=x+' : '+y;
+              console.log(z);
+              $($put_ans.get(curr_quest)).attr('value',z);
+            }
           }
-          else if (x3.checked && x3.getAttribute("value")==x4){
-            count+=1;
-            $($score.get(curr_quest)).attr('value',count);
+
+          else if (x3.checked){
+            if (curr_quest==0){
+              var y=x3.getAttribute('value');
+              $($put_ans.get(curr_quest)).attr('value',y);
+            }
+            else{
+              var x=$($put_ans).get(curr_quest-1).getAttribute('value');
+              var y=x3.getAttribute("value");
+              var z=x+' : '+y;
+              console.log(z);
+              $($put_ans.get(curr_quest)).attr('value',z);
+            }
           }
           curr_quest+=1;
           if (curr_quest==total_question){

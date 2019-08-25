@@ -15,9 +15,9 @@ urlpatterns = [
     url(r'^profile',views.profile,name="profile"),
     url(r'^create_quiz',views.create_quiz,name="create_quiz"),
     url(r'^performance',views.performance,name="performance"),
-    url(r'^leaderboard',views.leaderboard,name="leaderboard"),
     url(r'^your_quiz',views.your_quiz,name="your_quiz"),
     url(r'^modify',views.modify_quiz,name="modify_quiz"),
+    url(r'^results',views.results,name="results"),
 ]
 
 #AIzaSyCRNh2DQfCBPzTVKkO9yzA0Yy4JbQq3vVM
