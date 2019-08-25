@@ -1,10 +1,14 @@
 canvas {
     margin: auto;
-    background: #ececec;
+    background: gainsboro;
     width: 100%;
   }
   
   .btn-disabled {
-    color: #fff !important;
+    color: black !important;
   }
+body{
+  background-image: url('back2.jpg');
+  
+}
   

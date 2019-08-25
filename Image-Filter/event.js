@@ -11,71 +11,39 @@ const revertBtn = document.getElementById("revert-btn");
 // Filter & Effect Handlers
 document.addEventListener("click", e => {
   if (e.target.classList.contains("filter-btn")) {
-    if (e.target.classList.contains("brightness-add")) {
+    if (e.target.classList.contains("brightness+ve")) {
       Caman("#canvas", img, function() {
         this.brightness(5).render();
       });
-    } else if (e.target.classList.contains("brightness-remove")) {
+    } else if (e.target.classList.contains("brightness-ve")) {
       Caman("#canvas", img, function() {
         this.brightness(-5).render();
       });
-    } else if (e.target.classList.contains("contrast-add")) {
+    } else if (e.target.classList.contains("contrast+ve")) {
       Caman("#canvas", img, function() {
         this.contrast(5).render();
       });
-    } else if (e.target.classList.contains("contrast-remove")) {
+    } else if (e.target.classList.contains("contrast-ve")) {
       Caman("#canvas", img, function() {
         this.contrast(-5).render();
       });
-    } else if (e.target.classList.contains("saturation-add")) {
+    } else if (e.target.classList.contains("saturation+ve")) {
       Caman("#canvas", img, function() {
         this.saturation(5).render();
       });
-    } else if (e.target.classList.contains("saturation-remove")) {
+    } else if (e.target.classList.contains("saturation-ve")) {
       Caman("#canvas", img, function() {
         this.saturation(-5).render();
       });
-    } else if (e.target.classList.contains("vibrance-add")) {
+    } else if (e.target.classList.contains("vibrance+ve")) {
       Caman("#canvas", img, function() {
         this.vibrance(5).render();
       });
-    } else if (e.target.classList.contains("vibrance-remove")) {
+    } else if (e.target.classList.contains("vibrance-ve")) {
       Caman("#canvas", img, function() {
         this.vibrance(-5).render();
       });
-    } else if (e.target.classList.contains("vintage-add")) {
-      Caman("#canvas", img, function() {
-        this.vintage().render();
-      });
-    } else if (e.target.classList.contains("lomo-add")) {
-      Caman("#canvas", img, function() {
-        this.lomo().render();
-      });
-    } else if (e.target.classList.contains("clarity-add")) {
-      Caman("#canvas", img, function() {
-        this.clarity().render();
-      });
-    } else if (e.target.classList.contains("sincity-add")) {
-      Caman("#canvas", img, function() {
-        this.sinCity().render();
-      });
-    } else if (e.target.classList.contains("crossprocess-add")) {
-      Caman("#canvas", img, function() {
-        this.crossProcess().render();
-      });
-    } else if (e.target.classList.contains("pinhole-add")) {
-      Caman("#canvas", img, function() {
-        this.pinhole().render();
-      });
-    } else if (e.target.classList.contains("nostalgia-add")) {
-      Caman("#canvas", img, function() {
-        this.nostalgia().render();
-      });
-    } else if (e.target.classList.contains("hermajesty-add")) {
-      Caman("#canvas", img, function() {
-        this.herMajesty().render();
-      });
-    }
+    } 
   }
 });
 
